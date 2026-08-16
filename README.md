@@ -40,3 +40,12 @@ Stock Prime Agent turns a non-zero exit from `%%bash` into
 has no kernel-bootstrap hook, so the first ipython cell of each session is
 rewritten through the `tool_call` event to install the soften wrap first; the
 cell then keeps its output and prints `--- exit N` on stderr.
+
+## Verified
+
+Tested headless on stock Prime Agent 0.7.2 (config dir `~/.prime/agent`):
+
+- the merged package loads without errors;
+- the `sh` skill is advertised and callable (`await sh.run("pwd")`);
+- a `%%bash` cell with a failing command returns `--- exit 1` instead of
+  `CalledProcessError`; `npm test` passes (9 tests).
