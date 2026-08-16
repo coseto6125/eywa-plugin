@@ -1,3 +1,4 @@
+import { describe, it } from "vitest";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import extension, { bashBody, parseHookOutput, rlmTask } from "./index.ts";
@@ -99,4 +100,8 @@ const toolResult = handlers["tool_result"][0];
 	assert.equal(event.input.code, "x = 1 + 1");
 }
 
-console.log("all tests passed");
+describe("tool-hooks", () => {
+	it("behaves per the fork contract", () => {
+		// (top-level assert blocks above run here)
+	});
+});

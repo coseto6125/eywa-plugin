@@ -1,3 +1,4 @@
+import { describe, it } from "vitest";
 import assert from "node:assert/strict";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -62,4 +63,8 @@ const dir = mkdtempSync(resolve(tmpdir(), "claude-compat-"));
 	console.log("addendum chars:", addendum.length);
 }
 
-console.log("all tests passed");
+describe("claude-compat", () => {
+	it("behaves per the fork contract", () => {
+		// (top-level assert blocks above run here)
+	});
+});

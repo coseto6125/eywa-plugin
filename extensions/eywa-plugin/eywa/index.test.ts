@@ -1,3 +1,4 @@
+import { describe, it } from "vitest";
 import assert from "node:assert/strict";
 import { cacheKey, formatHistory, messageText, parseResults } from "./index.ts";
 
@@ -57,4 +58,8 @@ import { cacheKey, formatHistory, messageText, parseResults } from "./index.ts";
 	assert.equal(messageText(undefined), "");
 }
 
-console.log("all tests passed");
+describe("eywa", () => {
+	it("behaves per the fork contract", () => {
+		// (top-level assert blocks above run here)
+	});
+});

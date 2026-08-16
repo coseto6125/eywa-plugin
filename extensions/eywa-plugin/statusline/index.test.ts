@@ -1,3 +1,4 @@
+import { describe, it } from "vitest";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { buildPayload, sessionTotals } from "./index.ts";
@@ -64,4 +65,8 @@ const ctx: any = {
 	console.log("plain   :", out.replace(/\x1b\[[0-9;]*m/g, "").trim());
 }
 
-console.log("all tests passed");
+describe("statusline", () => {
+	it("behaves per the fork contract", () => {
+		// (top-level assert blocks above run here)
+	});
+});

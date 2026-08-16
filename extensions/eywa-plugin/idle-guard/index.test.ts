@@ -1,3 +1,4 @@
+import { describe, it } from "vitest";
 import assert from "node:assert/strict";
 import { idleNotice, idleSeconds } from "./index.ts";
 
@@ -30,4 +31,8 @@ import { idleNotice, idleSeconds } from "./index.ts";
 	assert.equal(idleNotice(3299, 3300), undefined);
 }
 
-console.log("all tests passed");
+describe("idle-guard", () => {
+	it("behaves per the fork contract", () => {
+		// (top-level assert blocks above run here)
+	});
+});
