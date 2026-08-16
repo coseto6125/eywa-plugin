@@ -8,6 +8,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
+    "@earendil-works/pi-ai": "https://pub-728493de92a943e2a9b2d17b4719f318.r2.dev/releases/v0.7.2/prime-agent-ai-0.7.2.tgz",
     "vitest": "^3.0.0"
   }
 }

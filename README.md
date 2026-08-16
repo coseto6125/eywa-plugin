@@ -14,7 +14,8 @@ fork. Branding is intentionally out of scope.
 | `extensions/idle-guard` | idle timeout guard |
 | `extensions/statusline` | renders `~/.claude/statusline.sh` inside the TUI |
 | `extensions/tool-hooks` | rtk / ecp command rewriting via `tool_call` |
-| `extensions/eywa-plugin` | `%%bash` softening, injected on the first ipython cell |
+| `extensions/eywa-plugin` | `%%bash` softening + await-optional `sh`, injected on the first ipython cell |
+| `extensions/eywa-plugin/manus` | the Manus task-bridge provider (from the fork), registered via `registerProvider` + `streamSimple` |
 | `skills/sh` | `sh` skill (run / read / grep), installed to `~/.agents/skills` |
 
 ## Install
@@ -41,11 +42,28 @@ has no kernel-bootstrap hook, so the first ipython cell of each session is
 rewritten through the `tool_call` event to install the soften wrap first; the
 cell then keeps its output and prints `--- exit N` on stderr.
 
+## Manus
+
+The stock runner ships no Manus support, so the plugin registers it with a
+custom `streamSimple` handler that reuses the fork's task bridge
+(`task.create` + polling `task.listMessages`, tool bridging through the
+prompt). Models: `manus-1.6`, `manus-1.6-lite`, `manus-1.6-max`.
+
+The API key is resolved by the runner at call time: set the `MANUS_API_KEY`
+environment variable, or keep the `manus` entry (baseUrl + apiKey) in
+`~/.prime/agent/models.json`. Manus tasks run in the cloud and bill credits.
+
 ## Verified
 
 Tested headless on stock Prime Agent 0.7.2 (config dir `~/.prime/agent`):
 
 - the merged package loads without errors;
 - the `sh` skill is advertised and callable (`await sh.run("pwd")`);
+- `sh.run(...)` also works **without** `await`: the call resolves eagerly and
+  returns a dual-mode result (`_EywaAgentSyncCallResult`) that behaves like the
+  value everywhere and stays awaitable;
 - a `%%bash` cell with a failing command returns `--- exit 1` instead of
-  `CalledProcessError`; `npm test` passes (9 tests).
+  `CalledProcessError`;
+- a throwaway `streamSimple` provider (dummy echo) streamed a reply through
+  the same `registerProvider` path Manus uses;
+- `npm test` passes (12 tests).

@@ -22,4 +22,11 @@ describe("softenFirstCell", () => {
 		const out = softenFirstCell("%%bash -e\nfalse")!;
 		expect(out).toContain('run_cell_magic("bash", "-e", "false")');
 	});
+
+	it("also installs the await-optional sh wrapper", () => {
+		const out = softenFirstCell("x = 1")!;
+		expect(out).toContain("_ep_make_module_await_optional");
+		expect(out).toContain("class _EywaAgentSyncCallResult");
+		expect(out).toContain("import sh as _ep_sh");
+	});
 });
