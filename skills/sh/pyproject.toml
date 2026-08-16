@@ -1,0 +1,19 @@
+# Kernel-side package for the bundled sh skill.
+#
+# The distribution is named sh-skill, not sh, so it never resolves against the
+# unrelated `sh` package on PyPI; the import name stays `sh` through the wheel
+# packages entry. It also declares no console script on purpose: an `sh`
+# executable in the kernel venv would shadow /bin/sh for every subprocess.
+[project]
+name = "sh-skill"
+version = "0.1.0"
+description = "Eywa Agent sh skill: shell, file read, and grep helpers that never raise on a non-zero exit"
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sh"]
